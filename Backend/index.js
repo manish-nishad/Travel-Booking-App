@@ -13,3 +13,5 @@ app.use("/auth", authController)
 
 //start our server
 app.listen(process.env.PORT, () => console.log("Server is running..."))
+
+//module
