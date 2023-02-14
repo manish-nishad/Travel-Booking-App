@@ -35,31 +35,32 @@ authController.post("/register", async (req, res) => {
 
 // Login
 
-// authController.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
+authController.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-//   if (email === "" || password === "") {
-//     return res.status(500).json({ msg: "All fields must be populated" });
-//   }
+  if (email === "" || password === "") {
+    return res.status(500).json({ msg: "All fields must be populated" });
+  }
 
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(404).json({ msg: "Invalid credentials" });
-//     }
-//     const comparePass = await bcrypt.compare(req.body.password, user.password);
-//     if (!comparePass) {
-//       return res.status(404).json({ msg: "Invalid credentials" });
-//     }
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ msg: "Invalid credentials" });
+    }
+    const comparePass = await bcrypt.compare(req.body.password, user.password);
+    if (!comparePass) {
+      return res.status(404).json({ msg: "Invalid credentials" });
+    }
 
-//     const {password, ...others} = user._doc
-//     const token = createToken(user);
+    const {password, ...others} = user._doc
+    const token = createToken(user);
 
-//     return res.status(200).json({ others, token });
-//   } catch (error) {
-//     return res.status(500).json(error);
-//   }
-// });
+    return res.status(200).json({ others, token });
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 
 const createToken = (user) => {
   const payload = {
